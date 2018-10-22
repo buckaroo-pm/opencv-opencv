@@ -230,11 +230,11 @@ cxx_library(
 )
 
 cxx_library(
-  name = "build_modules_flann_precomp_hpp-headers",
-  header_namespace= '',
+  name = 'build_modules_flann_precomp_hpp-headers', 
+  header_namespace = '', 
   compiler_flags = [],
   preprocessor_flags = [],
-  exported_headers = merge_dicts(subdir_glob([
+  exported_headers = subdir_glob([
     ("build/macos/3rdparty/ippicv/ippicv_lnx/include", "**/*.h"),
     ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.hpp"),
     ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.h"),
@@ -243,27 +243,18 @@ cxx_library(
     ("modules/flann/include", "**/*.hpp"),
     ("modules/flann/include", "**/*.h"),
     ("modules/core/include", "**/*.hpp"),
-    ("modules/core/include", "**/*.h")
-  ]), {
-    
-  }),
-  
-  
-  srcs = [] + [
-    
+    ("modules/core/include", "**/*.h"), 
+  ]), 
+  deps = [
+    ':ippicv', 
+    ':ippiw', 
   ],
-  linker_flags = [],
-  exported_linker_flags = [],
-  deps = [],
-  visibility = []
 )
 
 cxx_library(
   name = "build_modules_flann_test_precomp_hpp-headers",
-  header_namespace= '',
-  compiler_flags = [],
-  preprocessor_flags = [],
-  exported_headers = merge_dicts(subdir_glob([
+  header_namespace = '',
+  exported_headers = subdir_glob([
     ("build/macos", "**/*.hpp"),
     ("build/macos", "**/*.h"),
     ("modules/ts/include", "**/*.hpp"),
@@ -276,29 +267,16 @@ cxx_library(
     ("modules/core/include", "**/*.h"),
     ("modules/imgproc/include", "**/*.hpp"),
     ("modules/highgui/include", "**/*.hpp"),
-  ]), {
-    
-  }),
-  
-  
-  srcs = [] + [
-    
-  ],
-  linker_flags = [],
-  exported_linker_flags = [],
-  deps = [],
-  visibility = []
+  ]), 
 )
 
 cxx_library(
-  name = "build_modules_imgproc_test_precomp_hpp-headers",
-  header_namespace= '',
-  compiler_flags = [],
-  preprocessor_flags = [],
-  exported_headers = merge_dicts(subdir_glob([
-    ("build/macos/3rdparty/ippicv/ippicv_lnx/include", "**/*.h"),
-    ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.hpp"),
-    ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.h"),
+  name = 'build_modules_imgproc_test_precomp_hpp-headers',
+  header_namespace = '',
+  exported_headers = subdir_glob([
+    ("build/macos/3rdparty/ippicv/ippicv_mac/include", "**/*.h"),
+    ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.hpp"),
+    ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.h"),
     ("build/macos", "**/*.hpp"),
     ("build/macos", "**/*.h"),
     ("modules/ts/include", "**/*.hpp"),
@@ -310,18 +288,7 @@ cxx_library(
     ("modules/core/include", "**/*.hpp"),
     ("modules/core/include", "**/*.h"),
     ("modules/highgui/include", "**/*.hpp"), 
-  ]), {
-    
-  }),
-  
-  
-  srcs = [] + [
-    
-  ],
-  linker_flags = [],
-  exported_linker_flags = [],
-  deps = [],
-  visibility = []
+  ]), 
 )
 
 cxx_library(
@@ -356,30 +323,17 @@ cxx_library(
 
 cxx_library(
   name = "build_modules_ml_precomp_hpp-headers",
-  header_namespace= '',
-  compiler_flags = [],
-  preprocessor_flags = [],
-  exported_headers = merge_dicts(subdir_glob([
-    ("build/macos/3rdparty/ippicv/ippicv_lnx/include", "**/*.h"),
-    ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.hpp"),
-    ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.h"),
+  header_namespace = '',
+  exported_headers = subdir_glob([
+    ("build/macos/3rdparty/ippicv/ippicv_mac/include", "**/*.h"),
+    ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.hpp"),
+    ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.h"),
     ("build/macos", "**/*.h"),
     ("build/macos", "**/*.hpp"),
     ("modules/ml/include", "**/*.hpp"),
     ("modules/core/include", "**/*.hpp"),
     ("modules/core/include", "**/*.h"),
-  ]), {
-    
-  }),
-  
-  
-  srcs = [] + [
-    
-  ],
-  linker_flags = [],
-  exported_linker_flags = [],
-  deps = [],
-  visibility = []
+  ]), 
 )
 
 cxx_library(
@@ -415,34 +369,21 @@ cxx_library(
 
 cxx_library(
   name = "build_modules_objdetect_test_precomp_hpp-headers",
-  header_namespace= '',
-  compiler_flags = [],
-  preprocessor_flags = [],
-  exported_headers = merge_dicts(subdir_glob([
+  header_namespace = '',
+  exported_headers = subdir_glob([
     ("build/macos", "**/*.hpp"),
-("build/macos", "**/*.h"),
-("modules/ts/include", "**/*.hpp"),
-("modules/ts/include", "**/*.h"),
-("modules/objdetect/include", "**/*.hpp"),
-("modules/objdetect/include", "**/*.h"),
-("modules/imgcodecs/include", "**/*.hpp"),
-("modules/videoio/include", "**/*.hpp"),
-("modules/core/include", "**/*.hpp"),
-("modules/core/include", "**/*.h"),
-("modules/imgproc/include", "**/*.hpp"),
-("modules/highgui/include", "**/*.hpp")
-  ]), {
-    
-  }),
-  
-  
-  srcs = [] + [
-    
-  ],
-  linker_flags = [],
-  exported_linker_flags = [],
-  deps = [],
-  visibility = []
+    ("build/macos", "**/*.h"),
+    ("modules/ts/include", "**/*.hpp"),
+    ("modules/ts/include", "**/*.h"),
+    ("modules/objdetect/include", "**/*.hpp"),
+    ("modules/objdetect/include", "**/*.h"),
+    ("modules/imgcodecs/include", "**/*.hpp"),
+    ("modules/videoio/include", "**/*.hpp"),
+    ("modules/core/include", "**/*.hpp"),
+    ("modules/core/include", "**/*.h"),
+    ("modules/imgproc/include", "**/*.hpp"),
+    ("modules/highgui/include", "**/*.hpp")
+  ]), 
 )
 
 cxx_library(
@@ -1549,10 +1490,13 @@ cxx_precompiled_header(
   )
 
 cxx_precompiled_header(
-    name = "build_modules_flann_precomp_hpp",
-    src = "build/macos/modules/flann/precomp.hpp",
-    deps = [":build_modules_flann_precomp_hpp-headers"]
-  )
+  name = "build_modules_flann_precomp_hpp",
+  # src = "build/macos/modules/flann/precomp.hpp",
+  src = "modules/flann/src/precomp.hpp",
+  deps = [
+    ":build_modules_flann_precomp_hpp-headers", 
+  ], 
+)
 
 cxx_precompiled_header(
     name = "build_modules_flann_test_precomp_hpp",
@@ -1573,10 +1517,12 @@ cxx_precompiled_header(
   )
 
 cxx_precompiled_header(
-    name = "build_modules_ml_precomp_hpp",
-    src = "build/macos/modules/ml/precomp.hpp",
-    deps = [":build_modules_ml_precomp_hpp-headers"]
-  )
+  name = "build_modules_ml_precomp_hpp",
+  src = "modules/ml/src/precomp.hpp",
+  deps = [
+    ":build_modules_ml_precomp_hpp-headers", 
+  ], 
+)
 
 cxx_precompiled_header(
     name = "build_modules_ml_test_precomp_hpp",
@@ -1855,12 +1801,14 @@ cxx_library(
     (
       '^macos.*', 
       subdir_glob([ 
+        ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.hpp"), 
         ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.h"), 
       ])
     ), 
     (
       '^linux.*', 
       subdir_glob([ 
+        ("build/linux/3rdparty/ippicv/ippiw_lnx/include", "**/*.hpp"), 
         ("build/linux/3rdparty/ippicv/ippiw_lnx/include", "**/*.h"), 
       ])
     ), 
@@ -2024,25 +1972,21 @@ cxx_library(
       excludes=["modules/core/src/alloc.cpp"]
    )]
   +
-
   [ (file, ["-DHAVE_MALLOC_H=1","-DHAVE_MEMALIGN=1","-DHAVE_POSIX_MEMALIGN=1"]) for file in glob(
       ["modules/core/src/alloc.cpp"],
       excludes=[]
    )]
   +
-
   [ (file, ["-DCV_CPU_COMPILE_POPCNT=1","-DCV_CPU_COMPILE_SSE4_1=1","-DCV_CPU_COMPILE_SSE4_2=1","-DCV_CPU_COMPILE_SSSE3=1","-DCV_CPU_DISPATCH_MODE=SSE4_2"]) for file in glob(
       ["build/macos/modules/core/stat.sse4_2.cpp"],
       excludes=[]
    )]
   +
-
   [ (file, ["-DCV_CPU_COMPILE_AVX=1","-DCV_CPU_COMPILE_POPCNT=1","-DCV_CPU_COMPILE_SSE4_1=1","-DCV_CPU_COMPILE_SSE4_2=1","-DCV_CPU_COMPILE_SSSE3=1","-DCV_CPU_DISPATCH_MODE=AVX"]) for file in glob(
       ["build/macos/modules/core/mathfuncs_core.avx.cpp"],
       excludes=[]
    )]
   +
-
   [ (file, ["-DCV_CPU_COMPILE_AVX2=1","-DCV_CPU_COMPILE_AVX=1","-DCV_CPU_COMPILE_FMA3=1","-DCV_CPU_COMPILE_FP16=1","-DCV_CPU_COMPILE_POPCNT=1","-DCV_CPU_COMPILE_SSE4_1=1","-DCV_CPU_COMPILE_SSE4_2=1","-DCV_CPU_COMPILE_SSSE3=1","-DCV_CPU_DISPATCH_MODE=AVX2"]) for file in glob(
       ["build/macos/modules/core/mathfuncs_core.avx2.cpp","build/macos/modules/core/stat.avx2.cpp"],
       excludes=[]
@@ -2065,10 +2009,30 @@ cxx_library(
 )
 
 cxx_library(
-  name = "opencv_flann",
-  header_namespace= '',
-  compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIC","-msse","-msse2","-msse3"],
-  preprocessor_flags = ["-DCVAPI_EXPORTS","-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS","-DNDEBUG"],
+  name = 'opencv_flann', 
+  header_namespace = '', 
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option", 
+    "-fomit-frame-pointer", 
+    "-ffunction-sections", 
+    "-fdata-sections", 
+    "-fvisibility=hidden", 
+    "-fvisibility-inlines-hidden", 
+    "-fPIC", 
+    "-msse", 
+    "-msse2", 
+    "-msse3", 
+  ],
+  preprocessor_flags = [
+    "-DCVAPI_EXPORTS", 
+    "-D_USE_MATH_DEFINES", 
+    "-D__OPENCV_BUILD=1", 
+    "-D__STDC_CONSTANT_MACROS", 
+    "-D__STDC_FORMAT_MACROS", 
+    "-D__STDC_LIMIT_MACROS", 
+    "-DNDEBUG", 
+  ],
   exported_headers = subdir_glob([
     ("modules/flann/include", "**/*.hpp"), 
   ]), 
@@ -2079,12 +2043,16 @@ cxx_library(
   srcs = glob([
     'modules/flann/src/*.cpp', 
   ]),
-  linker_flags = [],
-  exported_linker_flags = ["-pthread","-ldl","-lm","-lrt"],
+  exported_linker_flags = [
+    "-pthread", 
+    "-ldl", 
+    "-lm", 
+    "-lrt", 
+  ],
   deps = [
-    ":ippicv", 
-    ":opencv_core", 
+    ':ippicv', 
     ":ippiw", 
+    ":opencv_core", 
   ],
   visibility = [
     'PUBLIC', 
@@ -2124,32 +2092,55 @@ cxx_library(
 
 cxx_library(
   name = "opencv_ml",
-  header_namespace= '',
-  compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIC","-msse","-msse2","-msse3"],
-  preprocessor_flags = ["-DCVAPI_EXPORTS","-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS","-DNDEBUG"],
+  header_namespace = '',
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option", 
+    "-fomit-frame-pointer", 
+    "-ffunction-sections", 
+    "-fdata-sections", 
+    "-fvisibility=hidden", 
+    "-fvisibility-inlines-hidden", 
+    "-fPIC", 
+    "-msse", 
+    "-msse2", 
+    "-msse3", 
+  ],
+  preprocessor_flags = [
+    "-DCVAPI_EXPORTS", 
+    "-D_USE_MATH_DEFINES", 
+    "-D__OPENCV_BUILD=1", 
+    "-D__STDC_CONSTANT_MACROS", 
+    "-D__STDC_FORMAT_MACROS", 
+    "-D__STDC_LIMIT_MACROS", 
+    "-DNDEBUG", 
+  ],
   exported_headers = merge_dicts(subdir_glob([
     
   ]), {
     
   }),
-  headers = merge_dicts(subdir_glob([
-    ("modules/ml/src", "**/*.hpp")
-  ]), {
-    
-  }),
-    precompiled_header = ":build_modules_ml_precomp_hpp",
-  srcs = 
-  [ (file, []) for file in glob(
-      ["modules/ml/src/*.cpp"],
-      excludes=[]
-   )]
-   + [
-    
+  headers = subdir_glob([
+    ("modules/ml/src", "**/*.hpp"), 
+  ]), 
+  precompiled_header = ":build_modules_ml_precomp_hpp",
+  srcs = glob([
+    "modules/ml/src/*.cpp", 
+  ]),
+  exported_linker_flags = [
+    "-pthread", 
+    "-ldl", 
+    "-lm", 
+    "-lrt", 
   ],
-  linker_flags = [],
-  exported_linker_flags = ["-pthread","-ldl","-lm","-lrt"],
-  deps = [":ippicv",":opencv_core",":ippiw"],
-  visibility = []
+  deps = [
+    ":ippicv", 
+    ":ippiw", 
+    ":opencv_core", 
+  ],
+  visibility = [
+    'PUBLIC', 
+  ], 
 )
 
 cxx_library(
