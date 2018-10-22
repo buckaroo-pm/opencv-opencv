@@ -1,0 +1,21 @@
+cxx_library(
+  name = 'tiff', 
+  header_namespace = '', 
+  exported_headers = glob([
+    '*.h', 
+  ]), 
+  srcs = glob([
+    '*.c', 
+  ], exclude = [
+    'tif_win32.c', 
+  ]), 
+  platform_srcs = [
+    ('^windows.*', [ 'tif_win32.c' ]), 
+  ], 
+  deps = [
+    '//3rdparty/libjpeg:jpeg', 
+  ], 
+  visibility = [
+    '//...', 
+  ], 
+)

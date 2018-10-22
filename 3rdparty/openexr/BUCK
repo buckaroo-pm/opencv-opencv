@@ -1,0 +1,23 @@
+cxx_library(
+  name = 'openexr', 
+  header_namespace = '', 
+  exported_headers = subdir_glob([
+    ('', '**/*.h'), 
+    ('Half', '**/*.h'), 
+    ('iex', '**/*.h'), 
+    ('ilmimf', '**/*.h'), 
+    ('ilmThread', '**/*.h'), 
+    ('imath', '**/*.h'), 
+  ]), 
+  srcs = glob([
+    '**/*.cpp', 
+  ], exclude = glob([
+    '**/*Win32.cpp', 
+  ])), 
+  platform_srcs = [
+    ('^windows.*', glob([ '**/*Win32.cpp' ])), 
+  ], 
+  visibility = [
+    '//...', 
+  ], 
+)

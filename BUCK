@@ -112,13 +112,11 @@ cxx_library(
 
 cxx_library(
   name = "build_modules_imgcodecs_precomp_hpp-headers",
-  header_namespace= '',
-  compiler_flags = [],
-  preprocessor_flags = [],
-  exported_headers = merge_dicts(subdir_glob([
-    ("build/macos/3rdparty/ippicv/ippicv_lnx/include", "**/*.h"),
-    ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.hpp"),
-    ("build/macos/3rdparty/ippicv/ippiw_lnx/include", "**/*.h"),
+  header_namespace = '',
+  exported_headers = subdir_glob([
+    ("build/macos/3rdparty/ippicv/ippicv_mac/include", "**/*.h"),
+    ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.hpp"),
+    ("build/macos/3rdparty/ippicv/ippiw_mac/include", "**/*.h"),
     ("build/macos", "**/*.h"),
     ("build/macos", "**/*.hpp"),
     ("modules/imgcodecs/include", "**/*.hpp"),
@@ -126,10 +124,8 @@ cxx_library(
     ("modules/core/include", "**/*.hpp"),
     ("modules/core/include", "**/*.h"),
     ("modules/imgproc/include", "**/*.hpp"),
-    ("modules/imgproc/include", "**/*.h")
-  ]), {
-    
-  }),
+    ("modules/imgproc/include", "**/*.h"),
+  ]), 
 )
 
 cxx_library(
@@ -1464,10 +1460,12 @@ cxx_precompiled_header(
   )
 
 cxx_precompiled_header(
-    name = "build_modules_imgcodecs_precomp_hpp",
-    src = "build/macos/modules/imgcodecs/precomp.hpp",
-    deps = [":build_modules_imgcodecs_precomp_hpp-headers"]
-  )
+  name = "build_modules_imgcodecs_precomp_hpp", 
+  src = "modules/imgcodecs/src/precomp.hpp", 
+  deps = [
+    ":build_modules_imgcodecs_precomp_hpp-headers", 
+  ], 
+)
 
 cxx_precompiled_header(
   name = "build_modules_videoio_precomp_hpp",
@@ -2229,32 +2227,64 @@ cxx_library(
 
 cxx_library(
   name = "opencv_imgcodecs",
-  header_namespace= '',
-  compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIC","-msse","-msse2","-msse3"],
-  preprocessor_flags = ["-DCVAPI_EXPORTS","-DHAVE_IMGCODEC_HDR","-DHAVE_IMGCODEC_PFM","-DHAVE_IMGCODEC_PXM","-DHAVE_IMGCODEC_SUNRASTER","-DHAVE_WEBP","-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS","-DNDEBUG"],
-  exported_headers = merge_dicts(subdir_glob([
-    
-  ]), {
-    
-  }),
-  headers = merge_dicts(subdir_glob([
-    ("modules/imgcodecs/src", "**/*.hpp")
-  ]), {
-    
-  }),
-    precompiled_header = ":build_modules_imgcodecs_precomp_hpp",
-  srcs = 
-  [ (file, []) for file in glob(
-      ["modules/imgcodecs/src/*.cpp"],
-      excludes=[]
-   )]
-   + [
-    
+  header_namespace = '',
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option", 
+    "-fomit-frame-pointer", 
+    "-ffunction-sections", 
+    "-fdata-sections", 
+    "-fvisibility=hidden", 
+    "-fvisibility-inlines-hidden", 
+    "-fPIC", 
+    "-msse", 
+    "-msse2", 
+    "-msse3", 
+  ], 
+  preprocessor_flags = [
+    "-DCVAPI_EXPORTS", 
+    "-DHAVE_IMGCODEC_HDR", 
+    "-DHAVE_IMGCODEC_PFM", 
+    "-DHAVE_IMGCODEC_PXM", 
+    "-DHAVE_IMGCODEC_SUNRASTER", 
+    "-DHAVE_WEBP", 
+    "-D_USE_MATH_DEFINES", 
+    "-D__OPENCV_BUILD=1", 
+    "-D__STDC_CONSTANT_MACROS", 
+    "-D__STDC_FORMAT_MACROS", 
+    "-D__STDC_LIMIT_MACROS", 
+    "-DNDEBUG", 
   ],
-  linker_flags = [],
-  exported_linker_flags = ["-pthread","-ldl","-lm","-lrt","-lz","-ljpeg","-lwebp","-lpng","-ltiff"],
-  deps = [":ippicv",":opencv_imgproc",":ippiw",":libjasper",":opencv_core"],
-  visibility = []
+  headers = subdir_glob([
+    ("modules/imgcodecs/src", "**/*.hpp")
+  ]), 
+  precompiled_header = ":build_modules_imgcodecs_precomp_hpp",
+  srcs = glob([
+    "modules/imgcodecs/src/*.cpp", 
+  ]),
+  exported_linker_flags = [
+    "-pthread", 
+    "-ldl", 
+    "-lm", 
+    "-lrt", 
+    "-lz", 
+    # "-ljpeg", 
+    # "-lwebp", 
+    # "-lpng", 
+    # "-ltiff", 
+  ],
+  deps = [
+    ":ippicv", 
+    ":ippiw", 
+    ":libjasper", 
+    ":opencv_imgproc", 
+    ":opencv_core", 
+    '//3rdparty/libjpeg:jpeg', 
+    '//3rdparty/libtiff:tiff', 
+    '//3rdparty/libpng:png', 
+    '//3rdparty/libwebp:webp', 
+    '//3rdparty/openexr:openexr', 
+  ],
 )
 
 cxx_library(
