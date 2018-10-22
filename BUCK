@@ -1469,17 +1469,19 @@ cxx_precompiled_header(
 
 cxx_precompiled_header(
   name = "build_modules_videoio_precomp_hpp",
-  src = "build/macos/modules/videoio/precomp.hpp",
+  src = "modules/videoio/src/precomp.hpp",
   deps = [
     ":build_modules_videoio_precomp_hpp-headers", 
   ], 
 )
 
 cxx_precompiled_header(
-    name = "build_modules_highgui_precomp_hpp",
-    src = "build/macos/modules/highgui/precomp.hpp",
-    deps = [":build_modules_highgui_precomp_hpp-headers"]
-  )
+  name = "build_modules_highgui_precomp_hpp",
+  src = "modules/highgui/src/precomp.hpp",
+  deps = [
+    ':build_modules_highgui_precomp_hpp-headers', 
+  ], 
+)
 
 cxx_precompiled_header(
     name = "build_modules_core_perf_precomp_hpp",
@@ -2421,43 +2423,52 @@ cxx_library(
 )
 
 cxx_library(
-  name = "opencv_features2d",
-  header_namespace= '',
+  name = 'opencv_features2d',
+  header_namespace = '',
   compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIC","-msse","-msse2","-msse3","-mssse3","-msse4.1","-mpopcnt","-msse4.2","-mf16c","-mfma","-mavx","-mavx2"],
   preprocessor_flags = ["-DCVAPI_EXPORTS","-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS","-DNDEBUG"],
   exported_headers = merge_dicts(subdir_glob([
     ("modules/features2d/include", "**/*.hpp"),
-("build/macos/modules/features2d", "**/*.hpp"),
-("modules/flann/include", "**/*.h")
+    ("build/macos/modules/features2d", "**/*.hpp"),
+    ("modules/flann/include", "**/*.h")
   ]), {
     'modules/features2d/opencl_kernels_features2d.hpp': ':gen-build-modules-features2d-opencl_kernels_features2d-hpp',
-'opencl_kernels_features2d.hpp': ':gen-build-modules-features2d-opencl_kernels_features2d-hpp',
+    'opencl_kernels_features2d.hpp': ':gen-build-modules-features2d-opencl_kernels_features2d-hpp',
   }),
-  headers = merge_dicts(subdir_glob([
+  headers = subdir_glob([
     ("modules/features2d/src", "**/*.hpp"),
-("modules/features2d/src", "**/*.h")
-  ]), {
-    
-  }),
-  
+    ("modules/features2d/src", "**/*.h")
+  ]), 
   srcs = 
   [ (file, []) for file in glob(
       ["modules/features2d/src/**/*.cpp","build/macos/modules/features2d/*.cpp"],
       excludes=["modules/features2d/src/fast.avx2.cpp"]
-   )]
-  +
-
+   )] + 
   [ (file, ["-DCV_CPU_COMPILE_AVX2=1","-DCV_CPU_COMPILE_AVX=1","-DCV_CPU_COMPILE_FMA3=1","-DCV_CPU_COMPILE_FP16=1","-DCV_CPU_COMPILE_POPCNT=1","-DCV_CPU_COMPILE_SSE4_1=1","-DCV_CPU_COMPILE_SSE4_2=1","-DCV_CPU_COMPILE_SSSE3=1","-DCV_CPU_DISPATCH_MODE=AVX2"]) for file in glob(
       ["modules/features2d/src/fast.avx2.cpp"],
       excludes=[]
-   )]
-   + [
+   )] + [
     ':gen-build-modules-features2d-opencl_kernels_features2d-cpp', 
   ],
-  linker_flags = [],
-  exported_linker_flags = ["-pthread","-ldl","-lm","-lrt"],
-  deps = [":ippicv",":opencv_flann",":opencv_highgui",":ippiw",":opencv_videoio",":opencv_imgcodecs",":opencv_imgproc",":opencv_core"],
-  visibility = []
+  exported_linker_flags = [
+    "-pthread", 
+    "-ldl", 
+    "-lm", 
+    "-lrt", 
+  ],
+  deps = [
+    ":ippicv", 
+    ":opencv_flann", 
+    ":opencv_highgui", 
+    ":ippiw", 
+    ":opencv_videoio", 
+    ":opencv_imgcodecs",
+    ":opencv_imgproc", 
+    ":opencv_core", 
+  ],
+  visibility = [
+    'PUBLIC', 
+  ], 
 )
 
 cxx_library(
