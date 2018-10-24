@@ -3,6 +3,44 @@ def merge_dicts(x, y):
   z.update(y)
   return z
 
+OPENCV_MODULES_HPP = '''/*
+ *      ** File generated automatically, do not modify **
+ *
+ * This file defines the list of modules available in current build configuration
+ *
+ *
+*/
+
+// This definition means that OpenCV is built with enabled non-free code.
+// For example, patented algorithms for non-profit/non-commercial use only.
+/* #undef OPENCV_ENABLE_NONFREE */
+
+#define HAVE_OPENCV_CALIB3D
+#define HAVE_OPENCV_CORE
+#define HAVE_OPENCV_DNN
+#define HAVE_OPENCV_FEATURES2D
+#define HAVE_OPENCV_FLANN
+#define HAVE_OPENCV_GAPI
+#define HAVE_OPENCV_HIGHGUI
+#define HAVE_OPENCV_IMGCODECS
+#define HAVE_OPENCV_IMGPROC
+#define HAVE_OPENCV_ML
+#define HAVE_OPENCV_OBJDETECT
+#define HAVE_OPENCV_PHOTO
+#define HAVE_OPENCV_SHAPE
+#define HAVE_OPENCV_STITCHING
+#define HAVE_OPENCV_SUPERRES
+#define HAVE_OPENCV_VIDEO
+#define HAVE_OPENCV_VIDEOIO
+#define HAVE_OPENCV_VIDEOSTAB
+'''
+
+genrule(
+  name = 'opencv-modules-hpp', 
+  out = 'opencv_modules.hpp', 
+  cmd = 'echo "' + OPENCV_MODULES_HPP + '" > $OUT', 
+)
+
 cxx_library(
   name = "build_modules_core_test_precomp_hpp-headers",
   header_namespace = '',
@@ -1377,7 +1415,27 @@ cxx_library(
 cxx_library(
   name = 'opencv_core',
   header_namespace = '',
-  compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIC","-msse","-msse2","-msse3","-mssse3","-msse4.1","-mpopcnt","-msse4.2","-mavx","-mf16c","-mfma","-mavx2"],
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option", 
+    "-fomit-frame-pointer", 
+    "-ffunction-sections", 
+    "-fdata-sections", 
+    "-fvisibility=hidden", 
+    "-fvisibility-inlines-hidden", 
+    "-fPIC", 
+    "-msse", 
+    "-msse2", 
+    "-msse3", 
+    "-mssse3", 
+    "-msse4.1", 
+    "-mpopcnt", 
+    "-msse4.2", 
+    "-mavx", 
+    "-mf16c", 
+    "-mfma", 
+    "-mavx2", 
+  ],
   preprocessor_flags = [
     "-DCVAPI_EXPORTS", 
     "-DOPENCV_WITH_ITT=1", 
@@ -1398,6 +1456,7 @@ cxx_library(
     ("build/macos/modules/core", "**/*.inc"),
     ("3rdparty/include/opencl/1.2", "**/*.h"), 
   ]), {
+    'opencv2/opencv_modules.hpp': ':opencv-modules-hpp', 
     'modules/core/opencl_kernels_core.hpp': ':gen-build-modules-core-opencl_kernels_core-hpp',
     'opencl_kernels_core.hpp': ':gen-build-modules-core-opencl_kernels_core-hpp',
   }),
@@ -2949,24 +3008,53 @@ cxx_binary(
 
 cxx_binary(
   name = "exe-opencv_test_features2d",
-  compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIE","-msse","-msse2","-msse3"],
-  preprocessor_flags = ["-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__OPENCV_TESTS=1","-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS","-DNDEBUG"],
-  headers = merge_dicts(subdir_glob([
-    ("modules/features2d/test", "**/*.hpp")
-  ]), {
-    
-  }),
-  srcs = 
-  [ (file, []) for file in glob(
-      ["modules/features2d/test/**/*.cpp"],
-      excludes=[]
-   )]
-   + [
-    
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option",
+    "-fomit-frame-pointer",
+    "-ffunction-sections", 
+    "-fdata-sections",
+    "-fvisibility=hidden", 
+    "-fvisibility-inlines-hidden",
+    "-fPIE",
+    "-msse",
+    "-msse2",
+    "-msse3", 
   ],
-  linker_flags = ["-Wl,--gc-sections","-lpthread","-ldl","-lm","-lrt"],
-  deps = ['//3rdparty/ippicv:ippicv',":opencv_ts",":opencv_features2d",":opencv_flann",":opencv_highgui",'//3rdparty/ippicv:ippiw',":opencv_videoio",":opencv_imgcodecs",":opencv_imgproc",":opencv_core"],
-  visibility = []
+  preprocessor_flags = [
+    "-D_USE_MATH_DEFINES", 
+    "-D__OPENCV_BUILD=1",
+    "-D__OPENCV_TESTS=1",
+    "-D__STDC_CONSTANT_MACROS", 
+    "-D__STDC_FORMAT_MACROS",
+    "-D__STDC_LIMIT_MACROS",
+    "-DNDEBUG", 
+  ],
+  headers = subdir_glob([
+    ("modules/features2d/test", "**/*.hpp"), 
+  ]), 
+  srcs = glob([
+    "modules/features2d/test/**/*.cpp", 
+  ]),
+  linker_flags = [
+    # "-Wl,--gc-sections", 
+    "-lpthread", 
+    "-ldl", 
+    "-lm", 
+    # "-lrt", 
+  ],
+  deps = [
+    '//3rdparty/ippicv:ippicv', 
+    '//3rdparty/ippicv:ippiw', 
+    ":opencv_core", 
+    ":opencv_ts", 
+    ":opencv_features2d", 
+    ":opencv_flann", 
+    ":opencv_highgui", 
+    ":opencv_videoio", 
+    ":opencv_imgcodecs", 
+    ":opencv_imgproc", 
+  ],
 )
 
 cxx_binary(
