@@ -94,6 +94,10 @@ cxx_library(
     ("modules/imgproc/include", "**/*.hpp"),
     ("modules/imgproc/include", "**/*.h"),
   ]), 
+  deps = [
+    '//3rdparty/ippicv:ippicv', 
+    '//3rdparty/ippicv:ippiw', 
+  ], 
 )
 
 cxx_library(
@@ -1545,12 +1549,12 @@ cxx_library(
     "-pthread", 
     "-ldl", 
     "-lm", 
-    "-lrt", 
+    # "-lrt", 
   ],
   deps = [
     '//3rdparty/ippicv:ippicv', 
     '//3rdparty/ippicv:ippiw', 
-    ":opencv_core", 
+    ':opencv_core', 
   ],
   visibility = [
     'PUBLIC', 
@@ -2501,24 +2505,41 @@ cxx_binary(
 
 cxx_binary(
   name = "exe-opencv_test_flann",
-  compiler_flags = ["-fsigned-char","-fdiagnostics-show-option","-fomit-frame-pointer","-ffunction-sections","-fdata-sections","-fvisibility=hidden","-fvisibility-inlines-hidden","-fPIE","-msse","-msse2","-msse3"],
-  preprocessor_flags = ["-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__OPENCV_TESTS=1","-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS","-DNDEBUG"],
-  headers = merge_dicts(subdir_glob([
-    ("modules/flann/test", "**/*.hpp")
-  ]), {
-    
-  }),
-  srcs = 
-  [ (file, []) for file in glob(
-      ["modules/flann/test/*.cpp"],
-      excludes=[]
-   )]
-   + [
-    
+  compiler_flags = [
+    "-fsigned-char","-fdiagnostics-show-option", 
+    "-fomit-frame-pointer","-ffunction-sections","-fdata-sections", 
+    "-fvisibility=hidden","-fvisibility-inlines-hidden", 
+    "-fPIE","-msse","-msse2","-msse3", 
   ],
-  linker_flags = ["-Wl,--gc-sections","-lpthread","-ldl","-lm","-lrt"],
-  deps = ['//3rdparty/ippicv:ippicv',":opencv_ts",":opencv_flann",":opencv_highgui",'//3rdparty/ippicv:ippiw',":opencv_videoio",":opencv_imgcodecs",":opencv_imgproc",":opencv_core"],
-  visibility = []
+  preprocessor_flags = [
+    "-D_USE_MATH_DEFINES","-D__OPENCV_BUILD=1","-D__OPENCV_TESTS=1", 
+    "-D__STDC_CONSTANT_MACROS","-D__STDC_FORMAT_MACROS","-D__STDC_LIMIT_MACROS", 
+    "-DNDEBUG", 
+  ],
+  headers = subdir_glob([
+    ("modules/flann/test", "**/*.hpp"), 
+  ]), 
+  srcs = glob([
+    "modules/flann/test/*.cpp", 
+  ]),
+  linker_flags = [
+    # "-Wl,--gc-sections", 
+    "-lpthread", 
+    "-ldl",
+    "-lm", 
+    # "-lrt", 
+  ],
+  deps = [
+    '//3rdparty/ippicv:ippicv', 
+    '//3rdparty/ippicv:ippiw', 
+    ":opencv_ts", 
+    ":opencv_flann", 
+    ":opencv_highgui", 
+    ":opencv_videoio", 
+    ":opencv_imgcodecs", 
+    ":opencv_imgproc", 
+    ":opencv_core", 
+  ],
 )
 
 cxx_binary(
