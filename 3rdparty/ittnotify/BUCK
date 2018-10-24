@@ -1,0 +1,31 @@
+cxx_library(
+  name = 'ittnotify',
+  header_namespace = '',
+  compiler_flags = [
+    '-fsigned-char', 
+    '-fdiagnostics-show-option', 
+    '-fomit-frame-pointer', 
+    '-ffunction-sections', 
+    '-fdata-sections', 
+    '-fvisibility=hidden', 
+    '-fPIC', 
+    '-msse', 
+    '-msse2', 
+    '-msse3', 
+  ],
+  preprocessor_flags = [
+    '-DNDEBUG', 
+  ],
+  exported_headers = subdir_glob([
+    ('include', '**/*.h'), 
+  ]), 
+  srcs = glob([
+    'src/ittnotify/*.c', 
+  ]),
+  exported_linker_flags = [
+    '-pthread', 
+  ],
+  visibility = [
+    '//...', 
+  ], 
+)

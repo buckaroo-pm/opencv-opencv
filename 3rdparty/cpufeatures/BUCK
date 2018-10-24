@@ -1,0 +1,13 @@
+cxx_library(
+  name = 'cpufeatures', 
+  header_namespace = '', 
+  headers = [
+    'cpu-features.h', 
+  ], 
+  srcs = [
+    'cpu-features.c', 
+  ], 
+  visibility = [
+    '//...', 
+  ], 
+)

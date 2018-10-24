@@ -1,0 +1,28 @@
+cxx_library(
+  name = 'utility', 
+  header_namespace = '', 
+  headers = [
+    'utility.hpp'
+  ], 
+  srcs = [
+    'utility.cpp', 
+  ],
+  deps = [
+    '//:opencv_core', 
+    '//:opencv_imgcodecs', 
+    '//:opencv_highgui', 
+    '//:opencv_calib3d', 
+  ], 
+)
+
+cxx_binary(
+  name = 'createsamples', 
+  srcs = [
+    'createsamples.cpp', 
+  ],
+  deps = [
+    ':utility', 
+    # '//:opencv_core', 
+    # '//:opencv_highgui', 
+  ], 
+)

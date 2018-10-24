@@ -1,0 +1,10 @@
+cxx_binary(
+  name = 'annotation', 
+  srcs = [
+    'opencv_annotation.cpp', 
+  ],
+  deps = [
+    '//:opencv_core', 
+    '//:opencv_highgui', 
+  ], 
+)

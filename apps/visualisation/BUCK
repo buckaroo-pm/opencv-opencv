@@ -1,0 +1,10 @@
+cxx_binary(
+  name = 'visualisation', 
+  srcs = [
+    'opencv_visualisation.cpp', 
+  ],
+  deps = [
+    '//:opencv_core', 
+    '//:opencv_highgui', 
+  ], 
+)

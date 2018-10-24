@@ -1,0 +1,14 @@
+cxx_library(
+  name = 'openvx', 
+  header_namespace = '', 
+  exported_headers = subdir_glob([
+    ('', 'hal/**/*.hpp'), 
+    ('include', '**/*.hpp'), 
+  ]), 
+  srcs = glob([
+    '**/*.cpp', 
+  ]), 
+  visibility = [
+    '//...', 
+  ], 
+)

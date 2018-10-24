@@ -1,0 +1,39 @@
+cxx_library(
+  name = 'protobuf', 
+  header_namespace = '', 
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option", 
+    "-fomit-frame-pointer", 
+    "-ffunction-sections", 
+    "-fdata-sections", 
+    "-fvisibility=hidden", 
+    "-fvisibility-inlines-hidden", 
+    "-fPIC", 
+    "-msse", 
+    "-msse2", 
+    "-msse3"
+  ],
+  preprocessor_flags = [
+    "-DHAVE_PTHREAD=1", 
+    "-DNDEBUG", 
+  ],
+  exported_headers = subdir_glob([
+    ('src', '**/*.h'), 
+  ]), 
+  headers = subdir_glob([
+    ('src', '**/internal/*.h'), 
+  ]), 
+  srcs = glob([
+    'src/google/protobuf/**/*.cc', 
+  ], excludes = [ 
+    'src/google/protobuf/stubs/atomicops_internals_x86_msvc.cc', 
+    'src/google/protobuf/util/internal/error_listener.cc', 
+  ]), 
+  exported_linker_flags = [
+    '-pthread', 
+  ],
+  visibility = [
+    'PUBLIC', 
+  ], 
+)

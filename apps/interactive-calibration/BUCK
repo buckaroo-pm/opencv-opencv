@@ -1,0 +1,15 @@
+cxx_binary(
+  name = 'interactive-calibration', 
+  header_namespace = '', 
+  headers = glob([
+    '**/*.hpp', 
+  ]), 
+  srcs = glob([
+    '**/*.cpp', 
+  ]),
+  deps = [
+    '//:opencv_core', 
+    '//:opencv_highgui', 
+    '//:opencv_calib3d', 
+  ], 
+)

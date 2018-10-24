@@ -1,0 +1,37 @@
+cxx_library(
+  name = 'jasper',
+  header_namespace = '',
+  compiler_flags = [
+    "-fsigned-char", 
+    "-fdiagnostics-show-option", 
+    "-fomit-frame-pointer", 
+    "-ffunction-sections", 
+    "-fdata-sections", 
+    "-fvisibility=hidden", 
+    "-fPIC", 
+    "-msse", 
+    "-msse2", 
+    "-msse3", 
+  ],
+  preprocessor_flags = [
+    "-DEXCLUDE_BMP_SUPPORT", 
+    "-DEXCLUDE_JPG_SUPPORT", 
+    "-DEXCLUDE_MIF_SUPPORT", 
+    "-DEXCLUDE_PGX_SUPPORT", 
+    "-DEXCLUDE_PNM_SUPPORT", 
+    "-DEXCLUDE_RAS_SUPPORT", 
+    "-DNDEBUG", 
+  ],
+  exported_headers = subdir_glob([
+    ('', '**/*.h'), 
+  ]), 
+  srcs = glob([
+    '*.c', 
+  ]), 
+  exported_linker_flags = [
+    "-pthread"
+  ],
+  visibility = [
+    '//...', 
+  ], 
+)

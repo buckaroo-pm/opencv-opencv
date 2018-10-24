@@ -1,0 +1,10 @@
+/bin
+/lib
+*.cmake
+*.dir
+*.marks
+*.txt
+Makefile
+*.junk
+*.properties
+/CMakeFiles
